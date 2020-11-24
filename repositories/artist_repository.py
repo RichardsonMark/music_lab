@@ -4,7 +4,7 @@ from db.run_sql import run_sql
 
 
 
-
+# save (create) artist
 def save(artist):
     sql = "INSERT INTO artists (name) VALUES (%s) RETURNING id"
     #  for last item we are referencing the album objects, artist objects id as a reference
@@ -20,3 +20,10 @@ def save(artist):
 
     artist.id = id
     return artist
+
+
+
+# deletes artists
+def delete_all():
+    sql = "DELETE FROM artists"
+    run_sql(sql)
