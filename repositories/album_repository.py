@@ -4,7 +4,8 @@ import repositories.artist_repository as artist_repository
 
 from models.album import Album
 
-# CREATE
+#CREATE
+# save (create) album
 def save(album):
     sql = "INSERT INTO albums (title, genre, artist_id) VALUES (%s, %s, %s) RETURNING *"
     #  for last item we are referencing the album objects, artist objects id as a reference
@@ -17,13 +18,25 @@ def save(album):
     return album
 
 
-# REPLACE
+# READ
+# find (read) album by id
+def select(id):
+    album = None
 
+    sql = "SELECT * FROM albums WHERE id = %s"
+    values = [id]
+    result = run_sql(sql, values)[0]
+
+    if result is not None:
+        artist = artist_repository.select(result['artist_id'])
+        album = Album(result['title'], result['genre'], artist, result['id'])
+    return album
 
 # UPDATE
 
 
 # DELETE
+# deletes (all) artists
 def delete_all():
     sql = "DELETE FROM albums"
     run_sql(sql)

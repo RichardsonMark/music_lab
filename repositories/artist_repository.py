@@ -3,7 +3,7 @@ from models.album import Album
 from db.run_sql import run_sql
 
 
-
+#CREATE
 # save (create) artist
 def save(artist):
     sql = "INSERT INTO artists (name) VALUES (%s) RETURNING id"
@@ -22,8 +22,27 @@ def save(artist):
     return artist
 
 
+# READ
+# find (read) artist by id
+def select(id):
+    artist = None
 
-# deletes artists
+    sql = "SELECT * FROM artists WHERE id = %s"
+    values = [id]
+    result = run_sql(sql, values)[0]
+
+    if result is not None:
+        artist = Artist(result['name'], result['id'])
+
+    return artist
+
+
+# UPDATE
+
+
+
+# DELETE
+# deletes (all) artists
 def delete_all():
     sql = "DELETE FROM artists"
     run_sql(sql)
